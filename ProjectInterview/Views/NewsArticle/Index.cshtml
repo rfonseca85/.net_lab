@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ProjectInterview.Models.NewsArticle>
+
+@{
+    ViewBag.Title = "News Articles List";
+}
+
+<script type="text/javascript">
+    function PostOnFacebook(newId) {
+        var id = newId;
+        $.ajax({
+            url: '/NewsArticle/PostNewsArticleOnFacebook',
+            type: 'POST',
+            data: { id: id },
+            success: function (authLink) {
+                if (authLink != 'No') {
+                    window.open(authLink, 'title', 'width=660,height=500,status=no,scrollbars=yes,toolbar=0,menubar=no,resizable=yes,top=60,left=320');
+                }
+            }
+        });
+    }
+</script>
+
+<h2>News Articles List</h2>
+
+<p>
+    @Html.ActionLink("Create New Article Entry", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewspaperName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PublishDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Excerpt)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewspaperName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PublishDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Excerpt)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.NewsArticleID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.NewsArticleID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.NewsArticleID })
+        </td>
+        <td>
+            <img src="~/Content/images/shareSmallButton.png" ur onclick="PostOnFacebook('@item.NewsArticleID');" alt="Post on Facebook" width="40" height="40" />
+        </td>
+    </tr>
+}
+
+</table>

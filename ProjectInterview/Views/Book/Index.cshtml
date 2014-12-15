@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ProjectInterview.Models.Book>
+
+@{
+    ViewBag.Title = "Books List";
+}
+
+<script type="text/javascript">
+    function PostOnFacebook(newId) {
+        var id = newId;
+        $.ajax({
+            url: '/Book/PostBookOnFacebook',
+            type: 'POST',
+            data: { id: id },
+            success: function (authLink) {
+                if (authLink != 'No') {
+                    window.open(authLink, 'title', 'width=660,height=500,status=no,scrollbars=yes,toolbar=0,menubar=no,resizable=yes,top=60,left=320');
+                }
+            }
+        });
+    }
+</script>
+
+<h2>Books List</h2>
+
+<p>
+    @Html.ActionLink("Create New Book Entry", "Create")
+</p>
+
+<br />
+<table class="table table-striped table-hover">
+    
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookCoverImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Excerpt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PublishDate)
+            </th>
+            <th>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <b>@Html.DisplayFor(modelItem => item.Title)</b>
+                </td>
+                <td>
+                    <img src="/Book/RetrieveImage/@item.BookID" alt="" height=150 width=100 />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Excerpt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BookID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.BookID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BookID })
+                </td>
+                <td>
+                    <img src="~/Content/images/shareSmallButton.png" ur onclick="PostOnFacebook('@item.BookID');" alt="Post on Facebook" width="40" height="40" />
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,72 @@
+﻿@model ProjectInterview.Models.NewsArticle
+
+@{
+    ViewBag.Title = "Details";
+    var NewsArticleID = @Model.NewsArticleID;      
+}
+
+<script type="text/javascript">
+    function PostOnFacebook(newId) {
+        var id = newId;
+        $.ajax({
+            url: '/NewsArticle/PostNewsArticleOnFacebook',
+            type: 'POST',
+            data: { id: id },
+            success: function (authLink) {
+                if (authLink != 'No') {
+                    window.open(authLink, 'title', 'width=660,height=500,status=no,scrollbars=yes,toolbar=0,menubar=no,resizable=yes,top=60,left=320');
+                }
+            }
+        });
+    }
+</script>
+
+<h2>Details</h2>
+
+<div>
+    <h4>NewsArticle</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NewspaperName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NewspaperName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PublishDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PublishDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Excerpt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Excerpt)
+        </dd>
+        <dd>
+            <br />
+        </dd>
+        <dd>
+            <img src="~/Content/images/shareBigButton.jpg" onclick="PostOnFacebook('@NewsArticleID');" alt="Share on Facebook" width="180" height="30" />
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.NewsArticleID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
