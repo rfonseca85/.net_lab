@@ -13,9 +13,9 @@ namespace ProjectInterview.Services
         {
             //Setting up the facebook object
             Facebook facebook = new Facebook();
-            facebook.AppID = "1544394479107117";
+            facebook.AppID = "---------------";
             facebook.CallBackURL = "http://localhost:4637/" + callBack + "/FacebookPostSuccess/";
-            facebook.Secret = "1bf69d4eea4e6a4ef088105e6f79d383";
+            facebook.Secret = "-------------";
 
             //Setting up the permissions
             List<FBPermissions> permissions = new List<FBPermissions>() {
